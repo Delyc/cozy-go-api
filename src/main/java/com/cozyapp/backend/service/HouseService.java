@@ -42,4 +42,21 @@ public class HouseService {
     public Optional<House> getHouseById(Integer id) {
         return houseRepo.findById(id);
     }
+
+    public void deleteHouseById(Integer id) {
+        houseRepo.deleteById(id);
+    }
+
+    public Optional<House> updateHouse(Integer id, House houseDetails) {
+        return houseRepo.findById(id).map(existingHouse -> {
+            if (houseDetails.getTitle() != null) {
+                existingHouse.setTitle(houseDetails.getTitle());
+            }
+            if (houseDetails.getUser() != null) {
+                existingHouse.setUser(houseDetails.getUser());
+            }
+
+            return houseRepo.save(existingHouse);
+        });
+    }
 }

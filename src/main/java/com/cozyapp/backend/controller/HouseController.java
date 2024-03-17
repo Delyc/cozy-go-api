@@ -6,7 +6,9 @@ import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +32,12 @@ public class HouseController {
         return new ResponseEntity<>(newHouse, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("agent/deleteHouse/{id}")
+    public ResponseEntity<Void> deleteHouseById(@PathVariable Integer id) {
+        houseService.deleteHouseById(id);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/public/houses")
     public List<House> getAllHouses() {
         return houseService.getAllHouses();
@@ -38,6 +46,13 @@ public class HouseController {
     @GetMapping("/public/houses/{id}")
     public ResponseEntity<House> getHouseById(@PathVariable Integer id) {
         return houseService.getHouseById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+     @PatchMapping("/agent/updateHouse/{id}")
+    public ResponseEntity<House> updateHouse(@PathVariable Integer id, @RequestBody House houseDetails) {
+        return houseService.updateHouse(id, houseDetails)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
