@@ -1,7 +1,13 @@
 package com.cozyapp.backend.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.cozyapp.backend.dto.HouseDto;
 import com.cozyapp.backend.entity.House;
@@ -29,4 +35,11 @@ public class HouseService {
         return houseRepo.save(house);
     }
     
+    public List<House> getAllHouses() {
+        return houseRepo.findAll();
+    }
+
+    public Optional<House> getHouseById(Integer id) {
+        return houseRepo.findById(id);
+    }
 }

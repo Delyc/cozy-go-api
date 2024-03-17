@@ -1,9 +1,12 @@
 package com.cozyapp.backend.controller;
 
+import java.util.List;
+
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +28,18 @@ public class HouseController {
     public ResponseEntity<House> addHouse(@PathVariable Integer userId, @RequestBody HouseDto houseDto ) {
         House newHouse = houseService.addHouse(houseDto, userId);
         return new ResponseEntity<>(newHouse, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/public/houses")
+    public List<House> getAllHouses() {
+        return houseService.getAllHouses();
+    }
+
+    @GetMapping("/public/houses/{id}")
+    public ResponseEntity<House> getHouseById(@PathVariable Integer id) {
+        return houseService.getHouseById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
     
 }
