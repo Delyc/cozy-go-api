@@ -17,6 +17,11 @@ public class OurUsers implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String companyName;
+    private String tiktok;
+    private String youtube;
+    private String insta;
+    private String phone;
     private String email;
     private String password;
     private String role;

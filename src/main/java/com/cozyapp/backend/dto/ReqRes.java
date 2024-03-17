@@ -24,6 +24,12 @@ public class ReqRes {
     private String name;
     private String email;
     private String role;
+    private String fullname;
+    private String companyName;
+    private String tiktok;
+    private String youtube;
+    private String insta;
+    private String phone;
     private String password;
     private List<Product> products;
     private OurUsers ourUsers;
