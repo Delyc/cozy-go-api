@@ -1,13 +1,13 @@
-package com.cozygo.be;
+package com.cozyapp.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BeApplication {
+public class cozyapi {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BeApplication.class, args);
+		SpringApplication.run(cozyapi.class, args);
 	}
 
 }

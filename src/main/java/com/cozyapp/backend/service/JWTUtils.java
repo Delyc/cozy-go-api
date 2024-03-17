@@ -1,4 +1,4 @@
-package com.cozygo.be.service;
+package com.cozyapp.backend.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,31 +1,25 @@
-package com.cozygo.be.entity;
+package com.cozyapp.backend.entity;
 
-import java.util.Collection;
-import java.util.List;
-
+import jakarta.persistence.*;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Data;
+import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "ourusers")
-public class OurUsers implements UserDetails{
+public class OurUsers implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String email;
     private String password;
     private String role;
-    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));
@@ -39,12 +33,12 @@ public class OurUsers implements UserDetails{
 
     @Override
     public boolean isAccountNonExpired() {
-       return true;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-       return true;
+        return true;
     }
 
     @Override
@@ -56,5 +50,4 @@ public class OurUsers implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
-    
 }

@@ -1,19 +1,21 @@
-package com.cozygo.be.dto;
+package com.cozyapp.backend.dto;
 
-import java.util.List;
-
-import com.cozygo.be.entity.House;
+import com.cozyapp.backend.entity.OurUsers;
+import com.cozyapp.backend.entity.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReqRes {
 
-    private int StatusCode;
+    private int statusCode;
     private String error;
     private String message;
     private String token;
@@ -23,7 +25,6 @@ public class ReqRes {
     private String email;
     private String role;
     private String password;
-    private List<House> houses;
-    private String ourUsers;
-
+    private List<Product> products;
+    private OurUsers ourUsers;
 }
