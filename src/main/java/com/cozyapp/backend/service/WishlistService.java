@@ -1,0 +1,87 @@
+package com.cozyapp.backend.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.cozyapp.backend.dto.WishlistItemDTO;
+import com.cozyapp.backend.entity.House;
+import com.cozyapp.backend.entity.OurUsers;
+import com.cozyapp.backend.entity.WishlistItem;
+import com.cozyapp.backend.entity.WishlistItemId;
+import com.cozyapp.backend.repository.HouseRepo;
+import com.cozyapp.backend.repository.OurUserRepo;
+import com.cozyapp.backend.repository.WishlistItemRepo;
+
+@Service
+public class WishlistService {
+
+    // Repositories and other services injected here
+  @Autowired
+  private WishlistItemRepo wishlistItemRepo;
+
+  @Autowired
+    private HouseRepo houseRepo;
+
+    @Autowired
+    private OurUserRepo ourUserRepo;
+  
+    
+
+    public WishlistItemDTO toggleWishlistItem(Integer userId, Integer houseId) {
+        WishlistItemId wishlistItemId = new WishlistItemId(userId, houseId);
+        Optional<WishlistItem> wishlistItemOptional = wishlistItemRepo.findById(wishlistItemId);
+
+        if (wishlistItemOptional.isPresent()) {
+            // If exists, remove it
+            wishlistItemRepo.deleteById(wishlistItemId);
+            return null; // Or indicate item was removed
+        } else {
+            // If not exists, add it
+            OurUsers user = ourUserRepo.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            House house = houseRepo.findById(houseId)
+                    .orElseThrow(() -> new RuntimeException("House not found"));
+
+            WishlistItem wishlistItem = new WishlistItem();
+            wishlistItem.setId(wishlistItemId);
+            wishlistItem.setUser(user);
+            wishlistItem.setHouse(house);
+
+            WishlistItem savedItem = wishlistItemRepo.save(wishlistItem);
+
+            WishlistItemDTO wishlistItemDTO = new WishlistItemDTO();
+            wishlistItemDTO.setUserId(userId);
+            wishlistItemDTO.setHouseId(houseId);
+            wishlistItemDTO.setAddedAt(savedItem.getAddedAt());
+            wishlistItemDTO.setHouseTitle(house.getTitle());
+
+            return wishlistItemDTO;
+        }
+    }
+
+
+  
+     @Transactional(readOnly = true)
+    public List<WishlistItemDTO> getUserWishlist(Integer userId) {
+        List<WishlistItem> wishlistItems = wishlistItemRepo.findAllByUserId(userId);
+        return wishlistItems.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    private WishlistItemDTO convertToDto(WishlistItem wishlistItem) {
+        WishlistItemDTO dto = new WishlistItemDTO();
+        dto.setUserId(wishlistItem.getUser().getId());
+        dto.setHouseId(wishlistItem.getHouse().getId());
+        dto.setAddedAt(wishlistItem.getAddedAt());
+        dto.setHouseTitle(wishlistItem.getHouse().getTitle());
+
+   
+        return dto;
+    }
+}
+
