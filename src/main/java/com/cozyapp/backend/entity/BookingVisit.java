@@ -36,5 +36,7 @@ public class BookingVisit {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+
     
 }
