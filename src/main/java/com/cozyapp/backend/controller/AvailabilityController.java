@@ -51,7 +51,6 @@ public class AvailabilityController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
      @PatchMapping("/agent/updateAvailability/{id}")
     public ResponseEntity<Availability> updateAvailability(@PathVariable Integer id, @RequestBody Availability availabilityDetails) {
         return availabilityService.updateAvailability(id, availabilityDetails)
