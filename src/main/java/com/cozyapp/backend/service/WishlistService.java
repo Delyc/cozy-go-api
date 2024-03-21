@@ -40,7 +40,7 @@ public class WishlistService {
         if (wishlistItemOptional.isPresent()) {
             // If exists, remove it
             wishlistItemRepo.deleteById(wishlistItemId);
-            return null; // Or indicate item was removed
+            return null; 
         } else {
             // If not exists, add it
             OurUsers user = ourUserRepo.findById(userId)
@@ -82,6 +82,19 @@ public class WishlistService {
 
    
         return dto;
+    }
+
+    public Optional<String> generateWishlistShareLink(Integer userId) {
+        return wishlistItemRepo.findAllByUserId(userId)
+                .stream()
+                .map(property -> "http://localhost:8080/public/wishlist/" + property.getUser().getId())
+                .findFirst();
+    }
+
+    public List<WishlistItemDTO> getWishlistByShareId(String shareId) {
+        Integer userId = Integer.parseInt(shareId);
+        List<WishlistItem> wishlistItems = wishlistItemRepo.findAllByUserId(userId);
+        return wishlistItems.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 }
 
