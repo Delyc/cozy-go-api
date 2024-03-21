@@ -21,17 +21,14 @@ import com.cozyapp.backend.repository.WishlistItemRepo;
 @Service
 public class WishlistService {
 
-    // Repositories and other services injected here
-  @Autowired
-  private WishlistItemRepo wishlistItemRepo;
+    @Autowired
+    private WishlistItemRepo wishlistItemRepo;
 
-  @Autowired
+    @Autowired
     private HouseRepo houseRepo;
 
     @Autowired
     private OurUserRepo ourUserRepo;
-  
-    
 
     public WishlistItemDTO toggleWishlistItem(Integer userId, Integer houseId) {
         WishlistItemId wishlistItemId = new WishlistItemId(userId, houseId);
@@ -40,7 +37,7 @@ public class WishlistService {
         if (wishlistItemOptional.isPresent()) {
             // If exists, remove it
             wishlistItemRepo.deleteById(wishlistItemId);
-            return null; // Or indicate item was removed
+            return null;
         } else {
             // If not exists, add it
             OurUsers user = ourUserRepo.findById(userId)
@@ -65,9 +62,7 @@ public class WishlistService {
         }
     }
 
-
-  
-     @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public List<WishlistItemDTO> getUserWishlist(Integer userId) {
         List<WishlistItem> wishlistItems = wishlistItemRepo.findAllByUserId(userId);
         return wishlistItems.stream().map(this::convertToDto).collect(Collectors.toList());
@@ -79,9 +74,19 @@ public class WishlistService {
         dto.setHouseId(wishlistItem.getHouse().getId());
         dto.setAddedAt(wishlistItem.getAddedAt());
         dto.setHouseTitle(wishlistItem.getHouse().getTitle());
-
-   
         return dto;
     }
-}
 
+    public Optional<String> generateWishlistShareLink(Integer userId) {
+        return wishlistItemRepo.findAllByUserId(userId)
+                .stream()
+                .map(property -> "http://localhost:8080/public/wishlist/" + property.getUser().getId())
+                .findFirst();
+    }
+
+    public List<WishlistItemDTO> getWishlistByShareId(String shareId) {
+        Integer userId = Integer.parseInt(shareId);
+        List<WishlistItem> wishlistItems = wishlistItemRepo.findAllByUserId(userId);
+        return wishlistItems.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+}

@@ -1,6 +1,7 @@
 package com.cozyapp.backend.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,6 @@ public class WishlistController {
             // If the item was added to the wishlist, return the DTO
             return new ResponseEntity<>(wishlistItemDTO, HttpStatus.CREATED);
         } else {
-            // If the item was removed from the wishlist, return an appropriate message or status
             return ResponseEntity.ok().body("House removed from wishlist");
         }
     }
@@ -42,6 +42,19 @@ public class WishlistController {
     @GetMapping("/user/wishlist/{userId}")
     public ResponseEntity<List<WishlistItemDTO>> getUserWishlist(@PathVariable Integer userId) {
         List<WishlistItemDTO> wishlistItems = wishlistService.getUserWishlist(userId);
+        return new ResponseEntity<>(wishlistItems, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/sharewishlist/{userId}")
+      public ResponseEntity<?> generateShareLink(@PathVariable Integer userId) {
+        return wishlistService.generateWishlistShareLink(userId)
+                .map(link -> ResponseEntity.ok().body(Map.of("shareLink", link)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/public/wishlist/{shareId}")
+    public ResponseEntity<List<WishlistItemDTO>> getWishlistByShareId(@PathVariable String shareId) {
+        List<WishlistItemDTO> wishlistItems = wishlistService.getWishlistByShareId(shareId);
         return new ResponseEntity<>(wishlistItems, HttpStatus.OK);
     }
 }
