@@ -1,6 +1,7 @@
 package com.cozyapp.backend.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,13 @@ public class HouseController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/public/share/{id}")
+    public ResponseEntity<?> generateShareLink(@PathVariable Integer id) {
+        return houseService.generateShareLink(id)
+                .map(link -> ResponseEntity.ok().body(Map.of("shareLink", link)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     
 }

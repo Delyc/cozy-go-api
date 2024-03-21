@@ -59,4 +59,12 @@ public class HouseService {
             return houseRepo.save(existingHouse);
         });
     }
+
+    public Optional<String> generateShareLink(Integer id) {
+        return houseRepo.findById(id).map(property -> 
+            "http://localhost:8080/public/houses/" + property.getId());
+    }
+
+
+    
 }
