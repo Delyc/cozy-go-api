@@ -21,17 +21,14 @@ import com.cozyapp.backend.repository.WishlistItemRepo;
 @Service
 public class WishlistService {
 
-    // Repositories and other services injected here
-  @Autowired
-  private WishlistItemRepo wishlistItemRepo;
+    @Autowired
+    private WishlistItemRepo wishlistItemRepo;
 
-  @Autowired
+    @Autowired
     private HouseRepo houseRepo;
 
     @Autowired
     private OurUserRepo ourUserRepo;
-  
-    
 
     public WishlistItemDTO toggleWishlistItem(Integer userId, Integer houseId) {
         WishlistItemId wishlistItemId = new WishlistItemId(userId, houseId);
@@ -40,7 +37,7 @@ public class WishlistService {
         if (wishlistItemOptional.isPresent()) {
             // If exists, remove it
             wishlistItemRepo.deleteById(wishlistItemId);
-            return null; 
+            return null;
         } else {
             // If not exists, add it
             OurUsers user = ourUserRepo.findById(userId)
@@ -65,9 +62,7 @@ public class WishlistService {
         }
     }
 
-
-  
-     @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public List<WishlistItemDTO> getUserWishlist(Integer userId) {
         List<WishlistItem> wishlistItems = wishlistItemRepo.findAllByUserId(userId);
         return wishlistItems.stream().map(this::convertToDto).collect(Collectors.toList());
@@ -79,8 +74,6 @@ public class WishlistService {
         dto.setHouseId(wishlistItem.getHouse().getId());
         dto.setAddedAt(wishlistItem.getAddedAt());
         dto.setHouseTitle(wishlistItem.getHouse().getTitle());
-
-   
         return dto;
     }
 
@@ -97,4 +90,3 @@ public class WishlistService {
         return wishlistItems.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 }
-
