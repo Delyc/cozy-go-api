@@ -2,6 +2,7 @@ package com.cozyapp.backend.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.cozyapp.backend.dto.HouseDto;
 import com.cozyapp.backend.entity.House;
 import com.cozyapp.backend.entity.OurUsers;
+import com.cozyapp.backend.entity.Picture;
+import com.cozyapp.backend.entity.Video;
 import com.cozyapp.backend.repository.HouseRepo;
 import com.cozyapp.backend.repository.OurUserRepo;
 
@@ -23,18 +26,37 @@ public class HouseService {
 
     @Autowired
     OurUserRepo ourUserRepo;
-    
+
     public House addHouse(HouseDto houseDTO, Integer userId) {
         OurUsers user = ourUserRepo.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found")); // Customize exception as needed
-    
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         House house = new House();
         house.setTitle(houseDTO.getTitle());
         house.setUser(user);
-        
+        house.setDescription(houseDTO.getDescription());
+        house.setCoverImageUrl(houseDTO.getCoverImageUrl());
+        house.setPrice(houseDTO.getPrice());
+        house.setLat(houseDTO.getLat());
+        house.setLongi(houseDTO.getLongi());
+        house.setStreetNumber(houseDTO.getStreetNumber());
+house.setAvailableStatus(houseDTO.getAvailableStatus());
+        house.setBedRooms(houseDTO.getBedRooms());
+        house.setTypeOfHouse(houseDTO.getTypeOfHouse());
+        List<Picture> pictures = houseDTO.getPictureUrls().stream()
+                .map(url -> new Picture(null, house, url))
+                .collect(Collectors.toList());
+        house.setPictures(pictures);
+
+        List<Video> videos = houseDTO.getVideoUrls().stream()
+                .map(url -> new Video(null, house, url))
+                .collect(Collectors.toList());
+        house.setVideos(videos);
+        house.setFeatures(houseDTO.getFeatures());
+
         return houseRepo.save(house);
     }
-    
+
     public List<House> getAllHouses() {
         return houseRepo.findAll();
     }
@@ -61,10 +83,8 @@ public class HouseService {
     }
 
     public Optional<String> generateShareLink(Integer id) {
-        return houseRepo.findById(id).map(property -> 
-            "http://localhost:8080/public/houses/" + property.getId());
+        return houseRepo.findById(id).map(
+                property -> "https://capstoneapi-production-b1ec.up.railway.app/public/houses/" + property.getId());
     }
 
-
-    
 }

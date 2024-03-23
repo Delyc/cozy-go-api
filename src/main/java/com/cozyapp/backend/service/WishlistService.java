@@ -49,9 +49,7 @@ public class WishlistService {
             wishlistItem.setId(wishlistItemId);
             wishlistItem.setUser(user);
             wishlistItem.setHouse(house);
-
             WishlistItem savedItem = wishlistItemRepo.save(wishlistItem);
-
             WishlistItemDTO wishlistItemDTO = new WishlistItemDTO();
             wishlistItemDTO.setUserId(userId);
             wishlistItemDTO.setHouseId(houseId);
@@ -80,7 +78,7 @@ public class WishlistService {
     public Optional<String> generateWishlistShareLink(Integer userId) {
         return wishlistItemRepo.findAllByUserId(userId)
                 .stream()
-                .map(property -> "http://localhost:8080/public/wishlist/" + property.getUser().getId())
+                .map(property -> "https://capstoneapi-production-b1ec.up.railway.app/public/wishlist/" + property.getUser().getId())
                 .findFirst();
     }
 
