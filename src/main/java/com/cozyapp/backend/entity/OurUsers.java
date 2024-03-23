@@ -6,6 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +31,14 @@ public class OurUsers implements UserDetails {
     private String role;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<WishlistItem> wishlistItems = new HashSet<>();
+
+     @OneToMany
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("user")
+    List<Availability> availabilities;
+    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    // private Set<Availability> availabilities = new HashSet<>();
+    
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

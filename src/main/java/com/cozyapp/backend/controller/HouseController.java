@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cozyapp.backend.dto.HouseDto;
 import com.cozyapp.backend.entity.House;
+import com.cozyapp.backend.entity.OurUsers;
+import com.cozyapp.backend.service.AuthService;
 import com.cozyapp.backend.service.HouseService;
 
 @RestController
@@ -25,6 +27,9 @@ public class HouseController {
 
     @Autowired
     private HouseService houseService;
+
+     @Autowired
+    private AuthService authService;
 
     @PostMapping("/agent/addHouse/{userId}")
     public ResponseEntity<House> addHouse(@PathVariable Integer userId, @RequestBody HouseDto houseDto ) {
@@ -63,6 +68,7 @@ public class HouseController {
                 .map(link -> ResponseEntity.ok().body(Map.of("shareLink", link)))
                 .orElse(ResponseEntity.notFound().build());
     }
+
 
     
 }
