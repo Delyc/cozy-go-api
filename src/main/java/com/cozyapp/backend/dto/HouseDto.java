@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import jakarta.persistence.Entity;
 import lombok.Data;
 
 @Data

@@ -7,10 +7,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cozyapp.backend.dto.ReqRes;
+import com.cozyapp.backend.entity.House;
 import com.cozyapp.backend.entity.OurUsers;
 import com.cozyapp.backend.repository.OurUserRepo;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class AuthService {
@@ -24,7 +26,7 @@ public class AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public ReqRes signUp(ReqRes registrationRequest){
+    public ReqRes signUp(ReqRes registrationRequest) {
         ReqRes resp = new ReqRes();
         try {
             OurUsers ourUsers = new OurUsers();
@@ -37,25 +39,26 @@ public class AuthService {
             ourUsers.setInsta(registrationRequest.getInsta());
             ourUsers.setCompanyName(registrationRequest.getCompanyName());
             OurUsers ourUserResult = ourUserRepo.save(ourUsers);
-            if (ourUserResult != null && ourUserResult.getId()>0) {
+            if (ourUserResult != null && ourUserResult.getId() > 0) {
                 resp.setOurUsers(ourUserResult);
                 resp.setMessage("User Saved Successfully");
                 resp.setStatusCode(200);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             resp.setStatusCode(500);
             resp.setError(e.getMessage());
         }
         return resp;
     }
 
-    public ReqRes signIn(ReqRes signinRequest){
+    public ReqRes signIn(ReqRes signinRequest) {
         ReqRes response = new ReqRes();
 
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signinRequest.getEmail(),signinRequest.getPassword()));
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(signinRequest.getEmail(), signinRequest.getPassword()));
             var user = ourUserRepo.findByEmail(signinRequest.getEmail()).orElseThrow();
-            System.out.println("USER IS: "+ user);
+            System.out.println("USER IS: " + user);
             var jwt = jwtUtils.generateToken(user);
             var refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
             response.setStatusCode(200);
@@ -63,14 +66,14 @@ public class AuthService {
             response.setRefreshToken(refreshToken);
             response.setExpirationTime("24Hr");
             response.setMessage("Successfully Signed In");
-        }catch (Exception e){
+        } catch (Exception e) {
             response.setStatusCode(500);
             response.setError(e.getMessage());
         }
         return response;
     }
 
-    public ReqRes refreshToken(ReqRes refreshTokenReqiest){
+    public ReqRes refreshToken(ReqRes refreshTokenReqiest) {
         ReqRes response = new ReqRes();
         String ourEmail = jwtUtils.extractUsername(refreshTokenReqiest.getToken());
         OurUsers users = ourUserRepo.findByEmail(ourEmail).orElseThrow();
@@ -85,4 +88,6 @@ public class AuthService {
         response.setStatusCode(500);
         return response;
     }
+
+
 }

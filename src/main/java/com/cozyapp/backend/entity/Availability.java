@@ -25,7 +25,7 @@ public class Availability {
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private OurUsers user;
 
     
