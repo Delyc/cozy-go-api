@@ -1,32 +1,30 @@
 package com.cozyapp.backend.entity;
 
-import java.time.LocalDateTime;
-
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
 @Entity
-@Table(name = "availabilities")
-public class Availability {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Wishlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
- private String day;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private String status;
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private OurUsers user;
 
-    
+    @ManyToOne
+    @JoinColumn(name = "house_id", referencedColumnName = "id")
+    private House house;
+
+
 }

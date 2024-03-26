@@ -18,7 +18,10 @@ import com.cozyapp.backend.entity.Video;
 import com.cozyapp.backend.repository.HouseRepo;
 import com.cozyapp.backend.repository.OurUserRepo;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class HouseService {
 
     @Autowired
@@ -40,7 +43,9 @@ public class HouseService {
         house.setLat(houseDTO.getLat());
         house.setLongi(houseDTO.getLongi());
         house.setStreetNumber(houseDTO.getStreetNumber());
-house.setAvailableStatus(houseDTO.getAvailableStatus());
+        house.setAvailableStatus(houseDTO.getAvailableStatus());
+        house.setArea(houseDTO.getArea());
+        house.setBathRooms(houseDTO.getBathRooms());
         house.setBedRooms(houseDTO.getBedRooms());
         house.setTypeOfHouse(houseDTO.getTypeOfHouse());
         List<Picture> pictures = houseDTO.getPictureUrls().stream()
@@ -84,7 +89,7 @@ house.setAvailableStatus(houseDTO.getAvailableStatus());
 
     public Optional<String> generateShareLink(Integer id) {
         return houseRepo.findById(id).map(
-                property -> "https://capstoneapi-production-b1ec.up.railway.app/public/houses/" + property.getId());
+                property -> "http://localhost:3000/house/" + property.getId());
     }
 
 }

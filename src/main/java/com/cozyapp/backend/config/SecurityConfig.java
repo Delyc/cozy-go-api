@@ -31,7 +31,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request.requestMatchers("/auth/**", "/public/**", "/", "/v2/api-docs",
                 "/v3/api-docs",
                 "/v3/api-docs/**",
@@ -40,10 +39,12 @@ public class SecurityConfig {
                 "/configuration/ui",
                 "/configuration/security",
                 "/swagger-ui/**",
+                "agent/**",
+                "user/**",
                 "/swagger-ui.html").permitAll()
-                        .requestMatchers("/agent/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/user/**").hasAnyAuthority("USER")
-                        .requestMatchers("/adminuser/**").hasAnyAuthority("USER", "ADMIN")
+                        // .requestMatchers("/agent/**").hasAnyAuthority("ADMIN")
+                        // .requestMatchers("/user/**")
+                        // .requestMatchers("/adminuser/**").hasAnyAuthority("USER", "ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

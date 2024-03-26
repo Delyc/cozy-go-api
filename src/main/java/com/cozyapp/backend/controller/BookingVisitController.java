@@ -12,6 +12,7 @@ import com.cozyapp.backend.service.BookingVisitService;
 
 @RestController
 @RequestMapping
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookingVisitController {
 
     @Autowired
@@ -32,7 +33,7 @@ public class BookingVisitController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/adminuser/allBookings")
+    @GetMapping("/user/allBookings")
     public List<BookingVisit> getAllBookings() {
         return bookingVisitService.getAllBookingVisits();
     }

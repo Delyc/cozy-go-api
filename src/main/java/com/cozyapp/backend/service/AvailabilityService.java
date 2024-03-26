@@ -13,7 +13,10 @@ import com.cozyapp.backend.entity.OurUsers;
 import com.cozyapp.backend.repository.AvailabilityRepo;
 import com.cozyapp.backend.repository.OurUserRepo;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class AvailabilityService {
 
     @Autowired
@@ -30,6 +33,7 @@ public class AvailabilityService {
         availability.setStartTime(availabilityDto.getStartTime());
         availability.setEndTime(availabilityDto.getEndTime());
         availability.setStatus(availabilityDto.getStatus());
+        availability.setDay(availabilityDto.getDay());
         availability.setUser(user);
 
         return availabilityRepo.save(availability);

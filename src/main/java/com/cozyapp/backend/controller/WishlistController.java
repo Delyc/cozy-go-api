@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cozyapp.backend.dto.WishlistItemDTO;
+import com.cozyapp.backend.service.WishlistResponse;
 import com.cozyapp.backend.service.WishlistService;
 
 @RestController
 @RequestMapping
+
 public class WishlistController {
 
     private final WishlistService wishlistService;
@@ -27,17 +29,25 @@ public class WishlistController {
         this.wishlistService = wishlistService;
     }
 
-    @PostMapping("/user/toggle/{userId}/{houseId}")
-    public ResponseEntity<?> toggleWishlistItem(@PathVariable Integer userId, @PathVariable Integer houseId) {
-        WishlistItemDTO wishlistItemDTO = wishlistService.toggleWishlistItem(userId, houseId);
-
-        if (wishlistItemDTO != null) {
-            // If the item was added to the wishlist, return the DTO
-            return new ResponseEntity<>(wishlistItemDTO, HttpStatus.CREATED);
-        } else {
-            return ResponseEntity.ok().body("House removed from wishlist");
-        }
+    @PostMapping("/user/toggle/{user_id}/{house_id}")
+    public String toggleWishlistItem(@PathVariable Integer user_id, @PathVariable Integer house_id) {
+        wishlistService.addHouseToWishlist(user_id, house_id);
+        return "House added to the wishlist successfully!";
     }
+
+
+
+     @GetMapping("/public/wishlist/get/{user_id}")
+public ResponseEntity<List<WishlistResponse>> getUserWishlistWithHouseDetails(@PathVariable Integer user_id) {
+    List<WishlistResponse> userWishlist = wishlistService.getUserWishlistWithHouseDetails(user_id);
+    return ResponseEntity.ok(userWishlist);
+}
+
+
+
+
+
+
 
     @GetMapping("/user/wishlist/{userId}")
     public ResponseEntity<List<WishlistItemDTO>> getUserWishlist(@PathVariable Integer userId) {
@@ -45,9 +55,9 @@ public class WishlistController {
         return new ResponseEntity<>(wishlistItems, HttpStatus.OK);
     }
 
-    @GetMapping("/user/sharewishlist/{userId}")
-      public ResponseEntity<?> generateShareLink(@PathVariable Integer userId) {
-        return wishlistService.generateWishlistShareLink(userId)
+    @GetMapping("/public/sharewishlist/{user_id}")
+      public ResponseEntity<?> generateShareLink(@PathVariable Integer user_id) {
+        return wishlistService.generateWishlistShareLink(user_id)
                 .map(link -> ResponseEntity.ok().body(Map.of("shareLink", link)))
                 .orElse(ResponseEntity.notFound().build());
     }

@@ -2,6 +2,8 @@ package com.cozyapp.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +23,8 @@ public class OurUsers implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String profilePictureUrl;
+    private String fullname;
     private String companyName;
     private String tiktok;
     private String youtube;
@@ -29,16 +33,18 @@ public class OurUsers implements UserDetails {
     private String email;
     private String password;
     private String role;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<WishlistItem> wishlistItems = new HashSet<>();
+    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    // private Set<WishlistItem> wishlistItems = new HashSet<>();
 
-     @OneToMany
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("user")
-    List<Availability> availabilities;
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    // private Set<Availability> availabilities = new HashSet<>();
-    
+    @ToString.Exclude
+    private List<Wishlist> wishlists;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
+    @ToString.Exclude
+    private List<Availability> availabilities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

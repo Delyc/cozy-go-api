@@ -38,6 +38,7 @@ public class House {
     private String liveLocation;
     private String availableStatus;
     private String typeOfHouse;
+    private String area;
     @OneToMany(mappedBy = "house", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("house")
     private List<Picture> pictures;

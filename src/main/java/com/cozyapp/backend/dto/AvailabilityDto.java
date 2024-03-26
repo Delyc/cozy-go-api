@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class AvailabilityDto {
+ private String day;
+
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String status;
