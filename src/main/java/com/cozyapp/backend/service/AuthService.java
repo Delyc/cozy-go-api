@@ -30,6 +30,8 @@ public class AuthService {
         ReqRes resp = new ReqRes();
         try {
             OurUsers ourUsers = new OurUsers();
+            ourUsers.setFullname(registrationRequest.getFullname());
+            ourUsers.setProfilePictureUrl(registrationRequest.getProfilePictureUrl());
             ourUsers.setEmail(registrationRequest.getEmail());
             ourUsers.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             ourUsers.setRole(registrationRequest.getRole());
@@ -37,6 +39,7 @@ public class AuthService {
             ourUsers.setTiktok(registrationRequest.getTiktok());
             ourUsers.setYoutube(registrationRequest.getYoutube());
             ourUsers.setInsta(registrationRequest.getInsta());
+
             ourUsers.setCompanyName(registrationRequest.getCompanyName());
             OurUsers ourUserResult = ourUserRepo.save(ourUsers);
             if (ourUserResult != null && ourUserResult.getId() > 0) {
@@ -89,5 +92,11 @@ public class AuthService {
         return response;
     }
 
-
+//get user by email
+public OurUsers getUserByEmail(String email) {
+    
+    System.out.println("email ########################## serviceee: "+email);
+    return ourUserRepo.findByEmail(email).orElseThrow();
+}
+    
 }

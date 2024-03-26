@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,18 @@ public class AuthController {
         return ResponseEntity.ok(authService.refreshToken(refreshTokenRequest));
     }
 
+    // @GetMapping("/public/users")
+    // public List<OurUsers> getAllUsers(){
+    //     return authService.getAllUsers();
+    // }
+
+    //get user by email
+    @GetMapping("/user/{email}")
+    public OurUsers getUserByEmail(@PathVariable String email){
+        System.out.println("email ##########################: "+email);
+        return authService.getUserByEmail(email);
+               
+    }
    
 
 }
