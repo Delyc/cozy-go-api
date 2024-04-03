@@ -34,6 +34,7 @@ public class BookingVisitService {
 
         BookingVisit bookingVisit = new BookingVisit();
         bookingVisit.setMessage(bookingVisitDto.getMessage());
+        bookingVisit.setHouseId(bookingVisitDto.getHouseId());
         bookingVisit.setUser(user);
         bookingVisit.setAvailability(availability);
         bookingVisit.setBookingStatus(bookingVisitDto.getBookingStatus());

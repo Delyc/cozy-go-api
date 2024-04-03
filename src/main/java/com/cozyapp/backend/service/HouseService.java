@@ -48,6 +48,8 @@ public class HouseService {
         house.setBathRooms(houseDTO.getBathRooms());
         house.setBedRooms(houseDTO.getBedRooms());
         house.setTypeOfHouse(houseDTO.getTypeOfHouse());
+        house.setDistrict(houseDTO.getDistrict());
+        house.setSector(houseDTO.getSector());
         List<Picture> pictures = houseDTO.getPictureUrls().stream()
                 .map(url -> new Picture(null, house, url))
                 .collect(Collectors.toList());
