@@ -31,7 +31,7 @@ public class WishlistController {
         this.wishlistService = wishlistService;
     }
 
-    @PostMapping("/user/toggle/{user_id}/{house_id}")
+    @PostMapping("/user/toggle/{user_id}/add/{house_id}")
     public String toggleWishlistItem(@PathVariable Integer user_id, @PathVariable Integer house_id) {
         wishlistService.addHouseToWishlist(user_id, house_id);
         return "House added to the wishlist successfully!";
