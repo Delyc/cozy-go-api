@@ -23,8 +23,7 @@ import com.cozyapp.backend.service.AuthService;
 import com.cozyapp.backend.service.HouseService;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "https://cozy-go.netlify.app/"})
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping
 public class HouseController {
 

@@ -12,8 +12,7 @@ import com.cozyapp.backend.service.BookingVisitService;
 
 @RestController
 @RequestMapping
-@CrossOrigin(origins = {"http://localhost:3000", "https://cozy-go.netlify.app/"})
-
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookingVisitController {
 
     @Autowired
