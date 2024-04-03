@@ -39,6 +39,7 @@ public class HouseService {
         house.setUser(user);
         house.setDescription(houseDTO.getDescription());
         house.setCoverImageUrl(houseDTO.getCoverImageUrl());
+        house.setVideoUrl(houseDTO.getVideoUrl());
         house.setPrice(houseDTO.getPrice());
         house.setLat(houseDTO.getLat());
         house.setLongi(houseDTO.getLongi());
@@ -50,6 +51,7 @@ public class HouseService {
         house.setTypeOfHouse(houseDTO.getTypeOfHouse());
         house.setDistrict(houseDTO.getDistrict());
         house.setSector(houseDTO.getSector());
+;
         List<Picture> pictures = houseDTO.getPictureUrls().stream()
                 .map(url -> new Picture(null, house, url))
                 .collect(Collectors.toList());
