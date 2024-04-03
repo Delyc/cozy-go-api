@@ -22,7 +22,8 @@ import com.cozyapp.backend.entity.House;
 import com.cozyapp.backend.service.AvailabilityService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://cozy-go.netlify.app/"})
+
 @RequestMapping
 public class AvailabilityController {
 

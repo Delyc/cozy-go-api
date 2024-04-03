@@ -18,7 +18,8 @@ import com.cozyapp.backend.service.AuthService;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://cozy-go.netlify.app/"})
+
 
 public class AuthController {
 
