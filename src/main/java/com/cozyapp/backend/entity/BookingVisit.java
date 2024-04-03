@@ -22,6 +22,7 @@ public class BookingVisit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private Integer houseId;
     private String message;
     private String bookingStatus;
     @ManyToOne

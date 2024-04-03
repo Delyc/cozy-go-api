@@ -24,6 +24,8 @@ public class HouseDto {
     private String area;
         private Long bathRooms;
         private String typeOfHouse;
+        private String district;
+    private String sector;
         private List<String> pictureUrls;
         private List<String> videoUrls;
         private String availableStatus;
