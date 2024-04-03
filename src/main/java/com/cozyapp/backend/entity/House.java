@@ -43,11 +43,11 @@ public class House {
     private String district;
     private String sector;
 
-    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "house_id", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("house")
     private List<Picture> pictures;
 
-    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "house_id", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("house")
     private List<Video> videos;
     @ElementCollection
