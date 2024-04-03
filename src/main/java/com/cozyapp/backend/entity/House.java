@@ -29,6 +29,7 @@ public class House {
     private String title;
     private String description;
     private String coverImageUrl;
+    private String videoUrl;
     private String price;
     private String lat;
     private String longi;
@@ -41,6 +42,7 @@ public class House {
     private String area;
     private String district;
     private String sector;
+
     @OneToMany(mappedBy = "house", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("house")
     private List<Picture> pictures;

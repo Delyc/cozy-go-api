@@ -16,6 +16,8 @@ public class HouseDto {
         private Integer userId;
         private String description;
         private String coverImageUrl;
+    private String videoUrl;
+
         private String price;
         private String lat;
         private String longi;
@@ -26,6 +28,7 @@ public class HouseDto {
         private String typeOfHouse;
         private String district;
     private String sector;
+
         private List<String> pictureUrls;
         private List<String> videoUrls;
         private String availableStatus;
