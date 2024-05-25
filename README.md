@@ -1,5 +1,7 @@
 #  HOUSE HUNTING API
 
+### FRONTEND : https://github.com/Delyc/cozygo-fe
+
 ### INTRODUCTION
 Welcome to our House Hunting App! Our app aims to simplify the process of finding your dream home as an international student in Rwanda. Our platform offers a comprehensive solution to help you discover the perfect property that meets your needs. With the help of multilingual chat support, you can easily communicate with agents and landlords in your preferred language.
 
@@ -12,7 +14,15 @@ Welcome to our House Hunting App! Our app aims to simplify the process of findin
   And so many more, you are welcome to explore :)
   
 ### INSTALLATION
+clone the repository
+```
+https://github.com/Delyc/cozy-go-api
+```
 
+clone frontend here
+```
+https://github.com/Delyc/cozygo-fe
+```
 
 
 
