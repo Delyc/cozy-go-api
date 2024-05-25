@@ -12,6 +12,19 @@ Welcome to our House Hunting App! Our app aims to simplify the process of findin
 * **Multilingual Chat**: Communicate with agents, landlords, and other users in your preferred language.
 
   And so many more, you are welcome to explore :)
+
+### TECH STACK
+
+* Java
+* Spring boot
+* Spring security
+* Socket-io server
+* Nodejs
+* RabbitMQ
+* Spring data JPA
+* Twilio
+* Postgres
+* MongoDB
   
 ### INSTALLATION
 clone the repository
