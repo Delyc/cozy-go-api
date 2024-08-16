@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cozyapp.backend.dto.HouseDto;
@@ -21,6 +22,7 @@ import com.cozyapp.backend.entity.House;
 import com.cozyapp.backend.entity.OurUsers;
 import com.cozyapp.backend.service.AuthService;
 import com.cozyapp.backend.service.HouseService;
+import com.cozyapp.backend.service.RecommendationService;
 import com.cozyapp.backend.service.WishlistService;
 
 @RestController
@@ -30,6 +32,9 @@ public class HouseController {
 
     @Autowired
     private HouseService houseService;
+
+    @Autowired
+    private RecommendationService recommendationService;
 
     @Autowired
     private final WishlistService wishlistService;
@@ -65,6 +70,11 @@ public class HouseController {
         return houseService.getHouseById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/public/houses/{id}/recommendations")
+    public ResponseEntity<List<House>> getHouseRecommendationById(@PathVariable Integer id, @RequestParam(defaultValue = "3") int topN) {
+        return new ResponseEntity<>(recommendationService.recommendSimilarHouses(id, topN), HttpStatus.OK);
     }
 
      @PatchMapping("/agent/updateHouse/{id}")

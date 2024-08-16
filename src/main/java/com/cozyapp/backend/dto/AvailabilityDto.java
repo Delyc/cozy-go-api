@@ -13,5 +13,4 @@ public class AvailabilityDto {
     private String status;
     private Integer userId;
     
-    
 }

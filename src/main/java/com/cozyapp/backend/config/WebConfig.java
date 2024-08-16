@@ -20,14 +20,3 @@ public class WebConfig implements WebMvcConfigurer {
 
 
 
-// @Bean
-// public CorsFilter corsFilter() {
-//     CorsConfiguration config = new CorsConfiguration();
-//     config.addAllowedOrigin("*"); // For development only
-//     config.addAllowedMethod("*");
-//     config.addAllowedHeader("*");
-
-//     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//     source.registerCorsConfiguration("/**", config);
-//     return new CorsFilter(source);
-// }

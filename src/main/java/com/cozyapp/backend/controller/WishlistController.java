@@ -40,7 +40,7 @@ public class WishlistController {
 
 
      @GetMapping("/public/wishlist/get/{user_id}")
-public ResponseEntity<List<WishlistResponse>> getUserWishlistWithHouseDetails(@PathVariable Integer user_id) {
+    public ResponseEntity<List<WishlistResponse>> getUserWishlistWithHouseDetails(@PathVariable Integer user_id) {
     List<WishlistResponse> userWishlist = wishlistService.getUserWishlistWithHouseDetails(user_id);
     return ResponseEntity.ok(userWishlist);
 }
